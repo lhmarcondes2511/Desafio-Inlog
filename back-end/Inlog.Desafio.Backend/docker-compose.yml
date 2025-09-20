@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  webapi:
+    build:
+      context: .
+      dockerfile: Inlog.Desafio.Backend.WebApi/Dockerfile
+    image: inlog-desafio-backend:webapi
+    container_name: inlog-webapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Testing
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__Default=Server=db;Database=InlogDb;User Id=sa;Password=Your_strong_password123;TrustServerCertificate=True
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    depends_on:
+      - db
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: inlog-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Your_strong_password123
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+
+volumes:
+  sqlserver_data:

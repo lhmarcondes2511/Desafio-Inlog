@@ -1,28 +1,25 @@
-# Dockerfile simples para a aplicação React
-
-# Usar imagem oficial do Node.js
 FROM node:18
 
-# Criar diretório da aplicação
 WORKDIR /app
 
-# Copiar arquivos de dependências
+# Accept build-time variables for CRA
+ARG REACT_APP_API_BASE_URL
+ARG REACT_APP_USE_MIRAGE
+
+# Expose them as environment variables during build so react-scripts can read them
+ENV REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
+ENV REACT_APP_USE_MIRAGE=${REACT_APP_USE_MIRAGE}
+
 COPY package*.json ./
 
-# Instalar dependências
 RUN npm install
 
-# Copiar código da aplicação
 COPY . .
 
-# Fazer build da aplicação
 RUN npm run build
 
-# Instalar servidor simples para servir a aplicação
 RUN npm install -g serve
 
-# Expor porta 3000
 EXPOSE 3000
 
-# Comando para iniciar a aplicação
 CMD ["serve", "-s", "build", "-l", "3000"]
