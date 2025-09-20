@@ -1,11 +1,12 @@
-namespace Inlog.Desafio.Backend.Domain.Models;
+using Inlog.Desafio.Backend.Domain.Models;
 
-public class Veiculo
+namespace Inlog.Desafio.Backend.Application.Dtos;
+
+public class VeiculoDto
 {
     public string Identifier { get; set; }
     public string LicensePlate { get; set; }
     public string TrackerSerialNumber { get; set; }
-    public double Latitude { get; set; }
-    public double Longitude { get; set; }
+    public CoordinatesDto Coordinates { get; set; }
     public string? Image { get; set; }
 }

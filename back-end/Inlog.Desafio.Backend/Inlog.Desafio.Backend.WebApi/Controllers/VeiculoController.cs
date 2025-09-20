@@ -1,4 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using Inlog.Desafio.Backend.Application.Dtos;
+using Inlog.Desafio.Backend.Application.Services;
+using Inlog.Desafio.Backend.Domain.Models;
+using FluentValidation;
+using System.Linq;
 
 namespace Inlog.Desafio.Backend.WebApi.Controllers;
 
@@ -7,26 +12,39 @@ namespace Inlog.Desafio.Backend.WebApi.Controllers;
 public class VeiculoController : ControllerBase
 {
     private readonly ILogger<VeiculoController> _logger;
+    private readonly IVeiculoService _service;
 
-    public VeiculoController(ILogger<VeiculoController> logger)
+    public VeiculoController(ILogger<VeiculoController> logger, IVeiculoService service)
     {
         _logger = logger;
+        _service = service;
     }
 
     [HttpPost("Cadastrar")]
-    public async Task<IActionResult> Cadastrar([FromBody] object dadosDoVeiculo)
+    public async Task<IActionResult> Cadastrar([FromBody] VehicleCreateDto dto, [FromServices] IValidator<VehicleCreateDto> validator)
     {
-        // TODO: Cadastrar um veiculo em memoria ou banco de dados
+        if (dto is null) return BadRequest();
+        var validation = await validator.ValidateAsync(dto);
+        if (!validation.IsValid)
+        {
+            return BadRequest(validation.Errors.Select(e => e.ErrorMessage));
+        }
 
-        return Ok();
+        try
+        {
+            var result = await _service.CadastrarAsync(dto);
+            return Created("/Veiculo/Listar", result);
+        }
+        catch (InvalidOperationException)
+        {
+            return Conflict();
+        }
     }
 
     [HttpGet("Listar")]
     public async Task<IActionResult> ListarVeiculosAsync()
     {
-        // TODO: retornar todos veiculos 
-
-        return Ok();
+        var itens = await _service.ListarAsync();
+        return Ok(itens);
     }
 }
-

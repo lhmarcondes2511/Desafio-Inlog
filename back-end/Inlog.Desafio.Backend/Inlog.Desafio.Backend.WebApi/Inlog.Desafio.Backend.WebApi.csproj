@@ -8,6 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Inlog.Desafio.Backend.Domain\Inlog.Desafio.Backend.Domain.csproj" />
+    <ProjectReference Include="..\Inlog.Desafio.Backend.Infra.Database\Inlog.Desafio.Backend.Infra.Database.csproj" />
+    <ProjectReference Include="..\Inlog.Desafio.Backend.Application\Inlog.Desafio.Backend.Application.csproj" />
   </ItemGroup>
 
 </Project>

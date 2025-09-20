@@ -6,4 +6,20 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+    <PackageReference Include="coverlet.collector" Version="6.0.2" />
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.36" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Inlog.Desafio.Backend.Domain\Inlog.Desafio.Backend.Domain.csproj" />
+    <ProjectReference Include="..\Inlog.Desafio.Backend.Infra.Database\Inlog.Desafio.Backend.Infra.Database.csproj" />
+    <ProjectReference Include="..\Inlog.Desafio.Backend.Application\Inlog.Desafio.Backend.Application.csproj" />
+    <ProjectReference Include="..\Inlog.Desafio.Backend.WebApi\Inlog.Desafio.Backend.WebApi.csproj" />
+  </ItemGroup>
+
 </Project>
